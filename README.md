@@ -14,4 +14,4 @@ What am I interested in learning from this?
 - JavaScript in general, NodeJS in particular
 
 
-Wish me luck, friends. I want to be a better developer and I can't just let my workplace experience be the only driver in this endeavor. I don't know what this webapp will be quite yet, but we'll figure something out.
+Wish me luck, friends. I want to be a better developer and I can't just let my workplace experience be the only driver in this endeavor. I don't know what this webapp will be quite yet, but we'll figure something out. Maybe a copy of LegalSchmold..
