@@ -20,16 +20,17 @@ public class EmployeeController {
 
     private final EmployeeRepository employeeRepository;
 
-    EmployeeController(EmployeeRepository employeeRepository){
+    private final EmployeeResourceAssembler employeeResourceAssembler;
+
+    EmployeeController(EmployeeRepository employeeRepository, EmployeeResourceAssembler employeeResourceAssembler){
         this.employeeRepository = employeeRepository;
+        this.employeeResourceAssembler = employeeResourceAssembler;
     }
 
     @GetMapping("/employees")
     Resources<Resource<Employee>> getAllEmployees(){
         List<Resource<Employee>> employees = employeeRepository.findAll().stream()
-                .map(employee -> new Resource<>(employee,
-                        linkTo(methodOn(EmployeeController.class).getEmployee(employee.getId())).withSelfRel(),
-                        linkTo(methodOn(EmployeeController.class).getAllEmployees()).withRel("employees")))
+                .map(employeeResourceAssembler::toResource)
                 .collect(Collectors.toList());
 
         return new Resources<>(employees,
@@ -41,9 +42,7 @@ public class EmployeeController {
         Employee employee = employeeRepository.findById(id)
                 .orElseThrow(() -> new EmployeeNotFoundException(id));
 
-        return new Resource<>(employee,
-                linkTo(methodOn(EmployeeController.class).getEmployee(id)).withSelfRel(),
-                linkTo(methodOn(EmployeeController.class).getAllEmployees()).withRel("employees"));
+        return employeeResourceAssembler.toResource(employee);
     }
 
     @PostMapping("/employees")
