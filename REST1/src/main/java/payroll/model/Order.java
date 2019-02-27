@@ -1,6 +1,7 @@
-package payroll;
+package payroll.model;
 
 import lombok.Data;
+import payroll.Status;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,7 +18,7 @@ public class Order {
 
     private @Id @GeneratedValue Long id;
 
-    Order(String description, Status status){
+    public Order(String description, Status status){
         this.description = description;
         this.status = status;
     }

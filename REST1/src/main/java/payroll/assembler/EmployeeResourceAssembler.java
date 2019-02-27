@@ -1,8 +1,10 @@
-package payroll;
+package payroll.assembler;
 
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.ResourceAssembler;
 import org.springframework.stereotype.Component;
+import payroll.controller.EmployeeController;
+import payroll.model.Employee;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.*;
 

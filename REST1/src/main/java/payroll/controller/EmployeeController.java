@@ -1,4 +1,4 @@
-package payroll;
+package payroll.controller;
 
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
@@ -10,6 +10,12 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import payroll.model.Employee;
+import payroll.exception.EmployeeNotFoundException;
+import payroll.repository.EmployeeRepository;
+import payroll.assembler.EmployeeResourceAssembler;
+import payroll.repository.EmployeeRepository;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -25,13 +31,13 @@ public class EmployeeController {
 
     private final EmployeeResourceAssembler employeeResourceAssembler;
 
-    EmployeeController(EmployeeRepository employeeRepository, EmployeeResourceAssembler employeeResourceAssembler) {
+    public EmployeeController(EmployeeRepository employeeRepository, EmployeeResourceAssembler employeeResourceAssembler) {
         this.employeeRepository = employeeRepository;
         this.employeeResourceAssembler = employeeResourceAssembler;
     }
 
     @GetMapping("/employees")
-    Resources<Resource<Employee>> getAllEmployees() {
+    public Resources<Resource<Employee>> getAllEmployees() {
         List<Resource<Employee>> employees = employeeRepository.findAll().stream()
                 .map(employeeResourceAssembler::toResource)
                 .collect(Collectors.toList());
@@ -41,7 +47,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/employees/{id}")
-    Resource<Employee> getEmployee(@PathVariable("id") Long id) {
+    public Resource<Employee> getEmployee(@PathVariable("id") Long id) {
         Employee employee = employeeRepository.findById(id)
                 .orElseThrow(() -> new EmployeeNotFoundException(id));
 
@@ -49,13 +55,13 @@ public class EmployeeController {
     }
 
     @PostMapping("/employees")
-    ResponseEntity<?> newEmployee(@RequestBody Employee newEmployee) throws URISyntaxException {
+    public ResponseEntity<?> newEmployee(@RequestBody Employee newEmployee) throws URISyntaxException {
         Resource<Employee> resource = employeeResourceAssembler.toResource(employeeRepository.save(newEmployee));
         return ResponseEntity.created(new URI(resource.getId().expand().getHref())).body(resource);
     }
 
     @PutMapping("/employees/{id}")
-    ResponseEntity<?> updateEmployee(@RequestBody Employee newEmployee, @PathVariable("id") Long id) throws URISyntaxException {
+    public ResponseEntity<?> updateEmployee(@RequestBody Employee newEmployee, @PathVariable("id") Long id) throws URISyntaxException {
         Employee updatedEmployee = employeeRepository.findById(id).map(employee -> {
             employee.setName(newEmployee.getName());
             employee.setRole(newEmployee.getRole());
@@ -72,7 +78,7 @@ public class EmployeeController {
     }
 
     @DeleteMapping("/employees/{id}")
-    ResponseEntity<?> removeEmployee(@PathVariable("id") Long id) {
+    public ResponseEntity<?> removeEmployee(@PathVariable("id") Long id) {
         employeeRepository.deleteById(id);
 
         return ResponseEntity.noContent().build();
