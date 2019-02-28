@@ -3,7 +3,7 @@ package payroll.assembler;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.ResourceAssembler;
 import org.springframework.stereotype.Component;
-import payroll.Status;
+import payroll.model.enums.Status;
 import payroll.controller.OrderController;
 import payroll.model.Order;
 
