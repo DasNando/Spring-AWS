@@ -15,7 +15,6 @@ import payroll.model.Employee;
 import payroll.exception.EmployeeNotFoundException;
 import payroll.repository.EmployeeRepository;
 import payroll.assembler.EmployeeResourceAssembler;
-import payroll.repository.EmployeeRepository;
 
 import java.net.URI;
 import java.net.URISyntaxException;

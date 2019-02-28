@@ -1,7 +1,7 @@
 package payroll.model;
 
 import lombok.Data;
-import payroll.Status;
+import payroll.model.enums.Status;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

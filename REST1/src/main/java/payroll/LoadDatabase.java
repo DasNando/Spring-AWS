@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import payroll.model.Employee;
 import payroll.model.Order;
+import payroll.model.enums.Status;
 import payroll.repository.EmployeeRepository;
 import payroll.repository.OrderRepository;
 
